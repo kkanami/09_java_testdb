@@ -5,21 +5,21 @@ import java.sql.SQLException;
 
 
 
-public class TestUserDAO {
+public class TestUserDAO {   //DBと会話できるクラスの作成
 
 	String name="";
 	String password="";
  public void select(String name,String password){
-	 DBConnector db= new DBConnector();
+	 DBConnector db= new DBConnector();  //ここと下の二行はDBと会話するためのコード
 	 Connection con=db.getConnection();
 
-	 String sql="select*from test_table where user_name=? and password=?";
+	 String sql="select*from test_table where user_name=? and password=?"; //test_dableのデータnameとpassにはいる二つの条件をみたしたデータがsqlにはいる
 	 try{
 		 PreparedStatement ps =con.prepareStatement(sql);
 		 ps.setString(1, name);
 		 ps.setString(2, password);
-		 ResultSet rs=ps.executeQuery();
-		 if(rs.next()){
+		 ResultSet rs=ps.executeQuery();  //実行メソッド。暗記
+		 if(rs.next()){  //１行ずらして値を取得
 			 System.out.println(rs.getString("user_name"));
 			 System.out.println(rs.getString("password"));
 
@@ -30,7 +30,7 @@ public class TestUserDAO {
 	 }
 
 	 try{
-		 con.close();
+		 con.close(); //DBとの接続終わり。必ずいれる
 	 }catch(SQLException e){
 		 e.printStackTrace();
 	 }
@@ -43,7 +43,7 @@ public void selectAll(){
 	try{
 		PreparedStatement ps=con.prepareStatement(sql);
 		ResultSet rs=ps.executeQuery();
-		while(rs.next()){
+		while(rs.next()){ //１行ずらすを値がある限りつづける
 			System.out.println(rs.getString("user_name"));
 			System.out.println(rs.getString("password"));
 		}
